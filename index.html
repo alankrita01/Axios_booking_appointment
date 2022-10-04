@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>JS For Beginners</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <header>
+      <h1>JS For Beginners</h1>
+    </header>
+
+    <section class="container" >
+      <form id="my-form" onsubmit="saveToLocalStorage(event)">
+        <h1>Add User</h1>
+        <div class="msg"></div>
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" name="username" id="username">
+        </div>
+        <div>
+          <label for="email">Email:</label>
+          <input type="text" name="emailId" id="emailId">
+        </div>
+        <input class="btn" type="submit" value="Submit">
+      </form>
+
+      <ul id="users"></ul>
+
+      <!-- <ul class="items">
+        <li class="item">Item 1</li>
+        <li class="item">Item 2</li>
+        <li class="item">Item 3</li>
+      </ul> -->
+    </section>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+    <script >
+      function saveToLocalStorage(event){
+
+        console.log(event)
+        event.preventDefault();
+
+        const name=event.target.username.value;
+        const email=event.target.emailId.value;
+
+        const obj ={
+          name : name,
+          email : email
+        }
+
+        //network call
+        axios.post("https://crudcrud.com/api/e607f1f0da02424f8cc14e722682e4fc/appointmentData",obj)
+        .then((response) => {
+          console.log('updated')
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+  
+
+        //localStorage.setItem("userDetails"+email,JSON.stringify(obj));
+        //showNewUserOnScreen(obj);
+      }
+
+      //Adding user details to dom
+      function showNewUserOnScreen(user){
+
+        const parentNode = document.getElementById('listOfUser');
+
+        const childHTML = `<li> ${user.name} - ${user.email} </li>`;
+
+        parentNode.innerHTML =parentNode.innerHTML+childHTML+'<button>Edit</button>  <button>Delete</button>';
+      }
+    </script>
+  </body>
+</html>
